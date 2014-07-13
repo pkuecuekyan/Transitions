@@ -14,7 +14,7 @@
     self = [super init];
     if (self){
         self.presentationDuration = 1.0;
-        self.dismissalDuration = 0.5;
+        self.dismissalDuration = self.presentationDuration;
     }
     
     return self;
