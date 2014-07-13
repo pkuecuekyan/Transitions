@@ -104,7 +104,7 @@ static const float kDoorwayZoomScale = 0.1;
     
     // Take a snapshot of the presented view: left
     CGRect toLeftSnapshotRect = CGRectMake(0.0, 0.0, toView.frame.size.width / 2, toView.frame.size.height);
-    UIView *toLeftSnapshotView = [toViewController.view resizableSnapshotViewFromRect:toLeftSnapshotRect  afterScreenUpdates:NO withCapInsets:UIEdgeInsetsZero];
+    UIView *toLeftSnapshotView = [toViewController.view resizableSnapshotViewFromRect:toLeftSnapshotRect  afterScreenUpdates:YES withCapInsets:UIEdgeInsetsZero];
     toLeftSnapshotView.frame = toLeftSnapshotRect;
     toLeftSnapshotView.frame = CGRectOffset(toLeftSnapshotView.frame, - toLeftSnapshotView.frame.size.width, 0);
     
@@ -112,7 +112,7 @@ static const float kDoorwayZoomScale = 0.1;
     
     // Take a snapshot of the presented view: right
     CGRect toRightSnapshotRect = CGRectMake(toView.frame.size.width / 2, 0.0, toView.frame.size.width / 2, fromView.frame.size.height);
-    UIView *toRightSnapshotView = [toViewController.view resizableSnapshotViewFromRect:toRightSnapshotRect  afterScreenUpdates:NO withCapInsets:UIEdgeInsetsZero];
+    UIView *toRightSnapshotView = [toViewController.view resizableSnapshotViewFromRect:toRightSnapshotRect  afterScreenUpdates:YES withCapInsets:UIEdgeInsetsZero];
     toRightSnapshotView.frame = toRightSnapshotRect;
     toRightSnapshotView.frame = CGRectOffset(toRightSnapshotView.frame, toRightSnapshotView.frame.size.width, 0);
     
