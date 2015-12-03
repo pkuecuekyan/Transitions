@@ -79,6 +79,7 @@
         toSnapshotView.layer.transform = CATransform3DRotate(toSnapshotView.layer.transform, M_PI_2, 0, 1, 0);
     }
     
+    NSLog(@"from %@ and to %@", NSStringFromCGRect(fromSnapshotRect), NSStringFromCGRect(toSnapshotRect));
     // Animated in the presenting and presented view simultaneously
     [UIView animateWithDuration:self.presentationDuration animations:^{
         

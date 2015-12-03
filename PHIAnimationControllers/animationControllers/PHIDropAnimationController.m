@@ -31,13 +31,14 @@
 }
 
 -(void)executeDropInAnimation:(id<UIViewControllerContextTransitioning>)transitionContext{
-   
+    
     // Hold onto views, VCs, context, frames
     UIView *containerView = [transitionContext containerView];
     UIViewController *toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
     UIViewController *fromViewController = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
     UIView *fromView = [fromViewController view];
     UIView *toView = [toViewController view];
+    toView.frame = [fromViewController view].frame;
     
     [containerView insertSubview:toViewController.view belowSubview:fromViewController.view];
     
@@ -46,20 +47,20 @@
     backgroundView.backgroundColor = [UIColor blackColor];
     
     [containerView addSubview:backgroundView];
-
+    
     // Take a snapshot of the presenting view
     CGRect fromSnapshotRect = fromView.bounds;
     UIView *fromSnapshotView = [fromView resizableSnapshotViewFromRect:fromSnapshotRect afterScreenUpdates:NO withCapInsets:UIEdgeInsetsZero];
     
     [backgroundView addSubview:fromSnapshotView];
-
+    
     // Take a snapshot of the presented view
     CGRect toSnapshotRect = toView.bounds;
     UIView *toSnapshotView = [toView resizableSnapshotViewFromRect:toSnapshotRect afterScreenUpdates:YES withCapInsets:UIEdgeInsetsZero];
-    
+
+    toSnapshotView.frame = CGRectOffset(toSnapshotRect, 0, -toSnapshotRect.size.height);
+
     [backgroundView addSubview:toSnapshotView];
-    
-    toSnapshotView.frame = CGRectOffset(toSnapshotView.frame, 0, -toSnapshotView.frame.size.height);
 
     [UIView animateWithDuration:self.presentationDuration
                           delay:0.0

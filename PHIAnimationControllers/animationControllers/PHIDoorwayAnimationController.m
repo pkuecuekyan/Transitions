@@ -25,20 +25,21 @@ static const float kDoorwayZoomScale = 0.1;
 
 - (void)executeDoorwayInAnimation:(id<UIViewControllerContextTransitioning>)transitionContext {
     
-    // Hold onto views, VCs, context, frames
-    UIViewController* toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
-    UIView *toView = toViewController.view;
-    UIViewController* fromViewController = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
-    UIView *fromView = fromViewController.view;
-    UIView *containerView = transitionContext.containerView;
-    
-    [containerView addSubview:toView];
+    UIView *containerView = [transitionContext containerView];
+    UIViewController *toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+    UIViewController *fromViewController = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+    UIView *fromView = [fromViewController view];
+    UIView *toView = [toViewController view];
+    toView.frame = [fromViewController view].frame;
+
+    [containerView insertSubview:toViewController.view belowSubview:fromViewController.view];
     
     // Create a transition background view
     UIView *backgroundView = [[UIView alloc] initWithFrame:[transitionContext initialFrameForViewController:fromViewController]];
     backgroundView.backgroundColor = [UIColor blackColor];
     
     [containerView addSubview:backgroundView];
+    
     
     // Take a snapshot of the presenting view: left
     CGRect fromLeftSnapshotRect = CGRectMake(0.0, 0.0, fromView.frame.size.width / 2, fromView.frame.size.height);
@@ -55,9 +56,9 @@ static const float kDoorwayZoomScale = 0.1;
     [backgroundView addSubview:fromRightSnapshotView];
 
     // Take a snapshot of the presented view
-    CGRect toSnapshotRect = containerView.frame;
-    PHIReflectionView *toSnapshotView = [[PHIReflectionView alloc] initWithFrame:toSnapshotRect];
-    [toSnapshotView addSubview:[toView resizableSnapshotViewFromRect:toSnapshotRect afterScreenUpdates:YES withCapInsets:UIEdgeInsetsZero]];
+    CGRect toSnapshotRect = toView.bounds;
+    UIView *toSnapshotView = [toView resizableSnapshotViewFromRect:toSnapshotRect afterScreenUpdates:YES withCapInsets:UIEdgeInsetsZero];
+
     CATransform3D scale = CATransform3DIdentity;
     toSnapshotView.layer.transform = CATransform3DScale(scale, kDoorwayZoomScale, kDoorwayZoomScale, 1);
     toSnapshotView.alpha = 0.1;
@@ -145,6 +146,5 @@ static const float kDoorwayZoomScale = 0.1;
                      }];
     
 }
-
 
 @end
